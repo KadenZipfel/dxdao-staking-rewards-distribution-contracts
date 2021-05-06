@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "erc20-staking-rewards-distribution-contracts/ERC20StakingRewardsDistributionFactory.sol";
+import "./ERC20StakingRewardsDistributionFactory.sol";
 import "./interfaces/IRewardTokensValidator.sol";
 import "./interfaces/IStakableTokenValidator.sol";
 
