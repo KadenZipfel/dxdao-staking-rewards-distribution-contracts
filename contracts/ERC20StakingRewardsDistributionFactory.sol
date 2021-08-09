@@ -8,10 +8,17 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./interfaces/IERC20StakingRewardsDistribution.sol";
 
+/**
+ * Errors codes:
+ *
+ * SRF01: cannot pause staking (already paused)
+ * SRF02: cannot resume staking (already active)
+ */
 contract ERC20StakingRewardsDistributionFactory is Ownable {
     using SafeERC20 for IERC20;
 
     address public implementation;
+    bool public stakingPaused;
     IERC20StakingRewardsDistribution[] public distributions;
 
     event DistributionCreated(address owner, address deployedAt);
@@ -22,6 +29,16 @@ contract ERC20StakingRewardsDistributionFactory is Ownable {
 
     function upgradeImplementation(address _implementation) external onlyOwner {
         implementation = _implementation;
+    }
+
+    function pauseStaking() external onlyOwner {
+        require(!stakingPaused, "SRF01");
+        stakingPaused = true;
+    }
+
+    function resumeStaking() external onlyOwner {
+        require(stakingPaused, "SRF02");
+        stakingPaused = false;
     }
 
     function createDistribution(
@@ -35,12 +52,11 @@ contract ERC20StakingRewardsDistributionFactory is Ownable {
     ) public virtual {
         address _distributionProxy = Clones.clone(implementation);
         for (uint256 _i; _i < _rewardTokenAddresses.length; _i++) {
-            uint256 _relatedAmount = _rewardAmounts[_i];
-            if (_relatedAmount > 0) {
+            if (_rewardAmounts[_i] > 0) {
                 IERC20(_rewardTokenAddresses[_i]).safeTransferFrom(
                     msg.sender,
-                    address(_distributionProxy),
-                    _relatedAmount
+                    _distributionProxy,
+                    _rewardAmounts[_i]
                 );
             }
         }
@@ -55,7 +71,8 @@ contract ERC20StakingRewardsDistributionFactory is Ownable {
             _locked,
             _stakingCap
         );
-        _distribution.transferOwnership(msg.sender);
+        address owner = this.owner();
+        _distribution.transferOwnership(owner);
         distributions.push(_distribution);
         emit DistributionCreated(msg.sender, address(_distribution));
     }
