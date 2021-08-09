@@ -19,6 +19,7 @@
         "postpack": "rimraf ./*.sol",
         "deploy:omen:rinkeby:validators": "hardhat deploy --network rinkeby --verify --with-validators --token-registry-address 0xA9516C178C70cEe5ebDae5000B35411BB5894961 --token-registry-list-id 1",
         "deploy:omen:rinkeby:no-validators": "hardhat deploy --network rinkeby --verify",
+        "deploy:omen:xdai:no-validators": "hardhat deploy --network xdai",
         "deploy:omen:arbitrum": "hardhat deploy --network arbitrumTestnetV3 --token-registry-address 0x9d6f6d86b81289e40e07fcda805c06f6e9b8f629 --token-registry-list-id 1",
         "deploy:swapr:rinkeby:validators": "hardhat deploy --network rinkeby --verify --with-validators --token-registry-address 0x815d1b18f6baaeb3853b0f637475a5c2b28e2253 --token-registry-list-id 1 --factory-address 0x02f45e773436C6D96Cc73600fe94a660ec67734C --swapr",
         "deploy:swapr:rinkeby:no-validators": "hardhat deploy --network rinkeby --verify --swapr",
@@ -27,7 +28,7 @@
     "author": "Federico Luzzi <fedeluzzi00@gmail.com>",
     "license": "GPL-3.0",
     "dependencies": {
-        "@openzeppelin/contracts": "^4.0.0",
+        "@openzeppelin/contracts": "^4.1.0",
         "dxdao-token-registry": "git://github.com/nicoelzer/dxDAO-Token-Registry.git#master",
         "dxswap-core": "git://github.com/levelkdev/dxswap-core.git#v0.3.1",
         "erc20-staking-rewards-distribution-contracts": "^0.11.4"
@@ -35,7 +36,7 @@
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@nomiclabs/hardhat-etherscan": "^2.1.0",
+        "@nomiclabs/hardhat-etherscan": "2.0.0",
         "@nomiclabs/hardhat-truffle5": "^2.0.0",
         "@nomiclabs/hardhat-web3": "^2.0.0",
         "babel-eslint": "^10.1.0",
@@ -45,7 +46,7 @@
         "cross-env": "^7.0.3",
         "dotenv": "^8.2.0",
         "eslint": "^7.17.0",
-        "hardhat": "^2.0.7",
+        "hardhat": "^2.2.1",
         "hardhat-gas-reporter": "^1.0.4",
         "husky": "^4.3.7",
         "mkdirp": "^1.0.4",

@@ -16,6 +16,10 @@ module.exports = {
             url: `https://rinkeby.infura.io/v3/${infuraId}`,
             accounts: [process.env.PRIVATE_KEY],
         },
+        xdai: {
+            url: "https://xdai.poanetwork.dev",
+            accounts: [process.env.PRIVATE_KEY],
+        },
         arbitrumTestnetV3: {
             url: "https://kovan3.arbitrum.io/rpc",
             accounts: [process.env.PRIVATE_KEY],
